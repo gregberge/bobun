@@ -21,7 +21,7 @@
     module.exports = exports = Bobun.Binding;
   } else {
     root.Bobun = root.Bobun || {};
-    Bobun.Binding = root.Bobun.Binding = {};
+    root.Bobun.Binding = Bobun.Binding;
   }
 
   _ = root._;
