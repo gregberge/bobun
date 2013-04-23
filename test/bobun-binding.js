@@ -22,7 +22,7 @@ describe('Bobun.Binding', function () {
   describe('#methods', function () {
 
     describe('#bindTo', function () {
-      it('obj.bindTo(bindObj, property)', function () {
+      it('obj.bindTo(bindedObj, property)', function () {
         var spy = sinon.spy();
         modelB.on('change:foo', spy);
         Bobun.Binding(modelA).bindTo(modelB, 'foo');
@@ -33,7 +33,7 @@ describe('Bobun.Binding', function () {
         expect(modelB.get('foo')).to.equal('bar');
       });
 
-      it('obj.bindTo(bindObj, Array properties)', function () {
+      it('obj.bindTo(bindedObj, Array attributes)', function () {
         var spy = sinon.spy();
         modelB.on('change:foo', spy);
         modelB.on('change:bar', spy);
@@ -45,7 +45,7 @@ describe('Bobun.Binding', function () {
         expect(spy.calledTwice).to.be.true;
       });
 
-      it('obj.bindTo(bindObj, Object properties)', function () {
+      it('obj.bindTo(bindedObj, Object attributes)', function () {
         var spy = sinon.spy();
         modelB.on('change:bar', spy);
         Bobun.Binding(modelA).bindTo(modelB, {
@@ -57,7 +57,7 @@ describe('Bobun.Binding', function () {
         expect(spy.called).to.be.true;
       });
 
-      it('Bobun.Binding.bindTo(obj, bindObj, Object properties)', function () {
+      it('Bobun.Binding.bindTo(obj, bindedObj, Object attributes)', function () {
         var spy = sinon.spy();
         modelB.on('change:bar', spy);
         Bobun.Binding.bindTo(modelA, modelB, {
@@ -71,7 +71,7 @@ describe('Bobun.Binding', function () {
     });
 
     describe('#bind', function () {
-      it('obj.bind(bindObj, property)', function () {
+      it('obj.bind(bindedObj, property)', function () {
         var spy = sinon.spy();
         modelA.on('change:foo', spy);
         modelB.on('change:foo', spy);

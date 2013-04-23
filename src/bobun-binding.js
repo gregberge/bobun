@@ -3,7 +3,7 @@
 
   var root = this,
   Bobun = {}, _,
-  formatProperties;
+  formatAttributes;
 
   Bobun.Binding = function (obj) {
     if (obj instanceof Bobun.Binding) {
@@ -29,31 +29,31 @@
     _ = require('underscore');
   }
 
-  formatProperties = function (properties) {
-    properties = typeof properties === 'string' ? [properties] : properties;
-    return _.isArray(properties) ? _.object(properties, properties) : properties;
+  formatAttributes = function (attributes) {
+    attributes = typeof attributes === 'string' ? [attributes] : attributes;
+    return _.isArray(attributes) ? _.object(attributes, attributes) : attributes;
   };
 
 
-  Bobun.Binding.bindTo = function (obj, bindObj, properties) {
-    if (! obj || ! bindObj || ! properties) {
+  Bobun.Binding.bindTo = function (obj, bindedObj, attributes) {
+    if (! obj || ! bindedObj || ! attributes) {
       return ;
     }
 
-    properties = formatProperties(properties);
+    attributes = formatAttributes(attributes);
 
-    _.each(properties, function (bindKey, key) {
+    _.each(attributes, function (bindKey, key) {
       obj.on('change:' + key, function (obj, value) {
-        bindObj.set(bindKey, value);
+        bindedObj.set(bindKey, value);
       });
     });
   };
 
-  Bobun.Binding.bind = function (obj, bindObj, properties) {
-    properties = formatProperties(properties);
+  Bobun.Binding.bind = function (obj, bindedObj, attributes) {
+    attributes = formatAttributes(attributes);
 
-    Bobun.Binding.bindTo(obj, bindObj, properties);
-    Bobun.Binding.bindTo(bindObj, obj, _.invert(properties));
+    Bobun.Binding.bindTo(obj, bindedObj, attributes);
+    Bobun.Binding.bindTo(bindedObj, obj, _.invert(attributes));
   };
 
   _.each(['bindTo', 'bind'], function (method) {
@@ -63,17 +63,3 @@
   });
 
 }).call(this);
-
-/*
-Bobun.Binding(this).bind('foo', view, 'bar');
-
-bind: function ('') {
-  Bobun.Binding(this.model).bind('foo', view, 'bar');
-  return this;
-}
-
-_.extend(view.prototype, Bobun.Binding);
-
-Bobun.Binding.bind(this.el, 'foo', view, 'bar');
-Bobun.Binding(this.model).bind('foo', view, 'bar');
-*/
