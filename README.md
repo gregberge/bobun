@@ -43,7 +43,7 @@ Bobun.Binding(modelA).bind(modelB, 'attr');
 ...
 ```
 
-### bindTo
+### bindTo( obj, bindedObj, attributes )
 
 `bindTo` provides a one-way binding.
 
