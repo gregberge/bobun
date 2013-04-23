@@ -1,0 +1,25 @@
+{
+  "name": "bobun-binding",
+  "description": "Backbone agnostic binding library.",
+  "version": "0.1.0",
+  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "keywords": [
+    "backbone",
+    "binding"
+  ],
+  "scripts": {
+    "install": "bower install",
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "mocha": "~1.9.0",
+    "chai": "~1.5.0",
+    "sinon": "~1.6.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4"
+  },
+  "license": "MIT"
+}
