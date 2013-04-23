@@ -1,6 +1,6 @@
 # Bobun Binding [![Build Status](https://travis-ci.org/neoziro/bobun-binding.png?branch=master)](https://travis-ci.org/neoziro/bobun-binding)
 
-Bobun Binding is binding library for Backbone, it use `set`, `get`, `on` methods and `change:*` events to bind two object. It support one-way and two-way bindings.
+Bobun Binding is a binding library for Backbone, it uses `set`, `get`, `on` methods and `change:*` events to bind two objects. It support one-way and two-way bindings.
 
 ## Installing
 
