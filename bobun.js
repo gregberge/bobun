@@ -109,14 +109,6 @@
       }, this);
     },
 
-    // An utility function who render and append a view to the view `el`
-    append: function (view) {
-      this.views.add(view);
-      this.$el.append(view.render().el);
-      view.delegateEvents();
-      return this;
-    },
-
     // A private function used to bind a model property to an option
     // using a syntax `model.attribute`
     _bindModelOption: function (option, model) {
@@ -136,6 +128,14 @@
 
       this.bind(model, attributes);
       this.set(option, model.get(optionMatches[1]), {silent: true});
+    },
+
+    // An utility function who render and append a view to the view `el`
+    append: function (view) {
+      this.views.add(view);
+      this.$el.append(view.render().el);
+      view.delegateEvents();
+      return this;
     },
 
     // An utility function to proxy a DOM event to a view event
