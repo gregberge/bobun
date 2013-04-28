@@ -1,7 +1,7 @@
 {
-  "name": "bobun-binding",
+  "name": "bobun",
   "description": "Backbone UI oriented library.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "ignore": [
     ".gitignore",
