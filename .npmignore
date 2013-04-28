@@ -2,5 +2,5 @@
 .jshintrc
 .travis.yml
 Gruntfile.js
-component.json
+bower.json
 test
