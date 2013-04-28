@@ -167,7 +167,7 @@
     };
   });
 
-  // `Backbone.Binding` methods that we want to implement on the view
+  // `Bobun.Binding` methods that we want to implement on the view
   _.each(['bindTo', 'bind'], function (method) {
     Bobun.View.prototype[method] = function () {
       return Bobun.Binding[method].apply(this, [this].concat(_.toArray(arguments)));
