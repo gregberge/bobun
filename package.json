@@ -1,11 +1,12 @@
 {
-  "name": "bobun-binding",
-  "description": "Backbone agnostic binding library.",
-  "version": "0.1.1",
+  "name": "bobun",
+  "description": "Backbone UI oriented library.",
+  "version": "0.3.0",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "keywords": [
     "backbone",
-    "binding"
+    "binding",
+    "ui"
   ],
   "scripts": {
     "install": "bower install",
@@ -19,7 +20,8 @@
     "sinon": "~1.6.0",
     "grunt-simple-mocha": "~0.4.0",
     "backbone": "~1.0.0",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "jquery": "~1.8.3"
   },
   "license": "MIT"
 }

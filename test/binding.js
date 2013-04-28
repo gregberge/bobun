@@ -2,7 +2,7 @@
 var expect = require('chai').expect,
 sinon = require('sinon'),
 Backbone = require('backbone'),
-Bobun = {Binding: require('../src/bobun-binding')};
+Bobun = require('../bobun');
 
 
 describe('Bobun.Binding', function () {

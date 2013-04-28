@@ -1,7 +1,7 @@
 {
   "name": "bobun-binding",
-  "description": "Backbone agnostic binding library.",
-  "version": "0.1.1",
+  "description": "Backbone UI oriented library.",
+  "version": "0.3.0",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "ignore": [
     ".gitignore",
@@ -11,5 +11,9 @@
     "Gruntfile.js",
     "package.json",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "backbone": "~1.0.0",
+    "backbone.babysitter": "~0.0.5"
+  }
 }
