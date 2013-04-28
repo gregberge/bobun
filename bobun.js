@@ -111,6 +111,7 @@
 
     // An utility function who render and append a view to the view `el`
     append: function (view) {
+      this.views.add(view);
       this.$el.append(view.render().el);
       view.delegateEvents();
       return this;

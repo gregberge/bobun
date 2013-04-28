@@ -28,6 +28,10 @@ describe('Bobun.View', function () {
       bobunView.append(myView);
     });
 
+    it('should add view to views', function () {
+      expect(bobunView.views.length).to.equal(1);
+    });
+
     it('should render a view', function () {
       expect(myView).to.have.property('rendered', true);
     });
