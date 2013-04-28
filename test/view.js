@@ -13,6 +13,31 @@ describe('Bobun.View', function () {
     bobunView = new Bobun.View();
   });
 
+  describe('#views', function () {
+    var myView;
+
+    beforeEach(function () {
+      myView = new Backbone.View();
+      bobunView.views.add(myView, 'myView');
+    });
+
+    it('should invoke stopListening on all sub-views', function () {
+      myView.stopListening = sinon.spy();
+
+      bobunView.stopListening();
+
+      expect(myView.stopListening.called).to.be.true;
+    });
+
+    it('should invoke remove on all sub-views', function () {
+      myView.remove = sinon.spy();
+
+      bobunView.remove();
+
+      expect(myView.remove.called).to.be.true;
+    });
+  });
+
   describe('#append', function () {
     var myView;
 
@@ -163,23 +188,6 @@ describe('Bobun.View', function () {
       bobunView.domEventTriggerProxy(event);
 
       expect(spy.called).to.be.true;
-    });
-  });
-
-  describe('#views', function () {
-    var myView;
-
-    beforeEach(function () {
-      myView = new Backbone.View();
-      bobunView.views.add(myView, 'myView');
-    });
-
-    it('should invoke stopListening on all sub-views', function () {
-      myView.stopListening = sinon.spy();
-
-      bobunView.stopListening();
-
-      expect(myView.stopListening.called).to.be.true;
     });
   });
 });
