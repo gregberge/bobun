@@ -157,7 +157,7 @@
   });
 
   // Use `Backbone.Model` method to handle options manipulation
-  _.each(['set', 'get', '_validate'], function (method) {
+  _.each(['set', 'get', '_validate', 'previous'], function (method) {
     Bobun.View.prototype[method] = function () {
       var attributes = this.attributes, result;
       this.attributes = this.options;
