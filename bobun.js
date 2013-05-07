@@ -130,10 +130,13 @@
       this.set(option, model.get(optionMatches[1]), {silent: true});
     },
 
-    // An utility function who render and append a view to the view `el`
-    append: function (view) {
+    // An utility function who render and append a view to the view `el`,
+    // or a child element of `el` if $el provided.
+    append: function (view, $el) {
       this.views.add(view);
-      this.$el.append(view.render().el);
+      $el = $el || this.$el;
+      $el = _.isString($el) ? this.$el.find($el) : $el;
+      $el.append(view.render().el);
       view.delegateEvents();
       return this;
     },
