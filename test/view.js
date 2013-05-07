@@ -22,7 +22,7 @@ describe('Bobun.View', function () {
     });
 
     it('should invoke stopListening on all sub-views', function () {
-      myView.stopListening = sinon.spy();
+      myView.stopListening = sinon.spy(myView, 'stopListening');
 
       bobunView.stopListening();
 
@@ -30,7 +30,7 @@ describe('Bobun.View', function () {
     });
 
     it('should invoke remove on all sub-views', function () {
-      myView.remove = sinon.spy();
+      myView.remove = sinon.spy(myView, 'remove');
 
       bobunView.remove();
 

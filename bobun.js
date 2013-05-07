@@ -146,7 +146,15 @@
     // Override `Backbone.View.remove` method to remove sub-views
     remove: function () {
       Backbone.View.prototype.remove.apply(this, arguments);
-      this.views.invoke('remove');
+      return this.clearViews();
+    },
+
+    // Clear subviews
+    clearViews: function () {
+      this.views.each(_.bind(function (view) {
+        this.views.remove(view.remove());
+      }, this));
+      return this;
     },
 
     // Override `Backbone.View.remove` method to stop listening the sub-views
