@@ -49,23 +49,48 @@ describe('Bobun.View', function () {
           return this;
         }
       }))();
-
-      bobunView.append(myView);
     });
 
     it('should add view to views', function () {
+      bobunView.append(myView);
       expect(bobunView.views.length).to.equal(1);
     });
 
     it('should render a view', function () {
+      bobunView.append(myView);
       expect(myView).to.have.property('rendered', true);
     });
 
     it('should append the view element to the base view element', function () {
+      bobunView.append(myView);
       expect(bobunView.$el.text()).to.equal('foo');
     });
 
+    describe('#given a second argument', function () {
+      beforeEach(function () {
+        bobunView.$el.append('<div class="child"></div>');
+      });
+
+      it('should append the view element to the target child of the base view element if its a selector', function () {
+        bobunView.append(myView, 'div.child');
+        expect(bobunView.$el.find('div.child').get(0)).to.equal(myView.$el.parent().get(0));
+      });
+
+      it('should append the view element to it if its a jQuery element', function () {
+        var $parent = bobunView.$el.find('div.child');
+        bobunView.append(myView, $parent);
+        expect($parent.get(0)).to.equal(myView.$el.parent().get(0));
+      });
+
+      it('should append the view element to it if its a DOM element', function () {
+        var parent = bobunView.$el.find('div.child').get(0);
+        bobunView.append(myView, parent);
+        expect(parent).to.equal(myView.$el.parent().get(0));
+      });
+    });
+
     it('should be fluent', function () {
+      bobunView.append(myView);
       expect(bobunView.append(myView)).to.equal(bobunView);
     });
   });

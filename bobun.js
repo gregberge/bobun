@@ -135,7 +135,7 @@
     append: function (view, $el) {
       this.views.add(view);
       $el = $el || this.$el;
-      $el = _.isString($el) ? this.$el.find($el) : $el;
+      $el = _.isString($el) ? this.$el.find($el) : Backbone.$($el);
       $el.append(view.render().el);
       view.delegateEvents();
       return this;
