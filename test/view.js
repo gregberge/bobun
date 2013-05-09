@@ -95,6 +95,73 @@ describe('Bobun.View', function () {
     });
   });
 
+  describe('#assign', function () {
+    var myView;
+
+    beforeEach(function () {
+      bobunView = new Bobun.View({
+        el: Backbone.$('<div><h1 class="foo"></h1></div>')
+      });
+
+      myView = new (Backbone.View.extend({
+        render: function () {
+          this.rendered = true;
+          this.$el.html('foo');
+          return this;
+        }
+      }))();
+    });
+
+    it('should add view to views', function () {
+      bobunView.assign('.foo', myView);
+      expect(bobunView.views.length).to.equal(1);
+    });
+
+    it('should render a view', function () {
+      bobunView.assign('.foo', myView);
+      expect(myView).to.have.property('rendered', true);
+    });
+
+    it('should assign the view to the element', function () {
+      bobunView.assign('.foo', myView);
+      expect(myView.$el.hasClass('foo')).to.be.true;
+      expect(bobunView.$el.text()).to.equal('foo');
+    });
+
+    it('should be fluent', function () {
+      expect(bobunView.assign('.foo', myView)).to.equal(bobunView);
+    });
+  });
+
+  describe('#toJSON', function () {
+
+    beforeEach(function () {
+      bobunView.collection = new Backbone.Collection([{foo: 'bar'}]);
+      bobunView.model = new Backbone.Model({foo: 'bar'});
+    });
+
+    it('should serialize the model and the collection', function () {
+      expect(bobunView.toJSON()).to.deep.equal({
+        model: {foo: 'bar'},
+        collection: [{foo: 'bar'}]
+      });
+    });
+  });
+
+  describe('#render', function () {
+
+    beforeEach(function () {
+      bobunView.model = new Backbone.Model({name: 'Greg'});
+      bobunView.template = function (data) {
+        return 'hello ' + data.model.name;
+      };
+    });
+
+    it('should render the template with view data', function () {
+      expect(bobunView.render().$el.html()).to.equal('hello Greg');
+    });
+  });
+
   describe('#set', function () {
 
     beforeEach(function () {

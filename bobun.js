@@ -92,6 +92,9 @@
   // and binding functions
   Bobun.View = Backbone.View.extend({
 
+    // A template assigned to the view
+    template: null,
+
     // Override `Backbone.View_configure` method, who initialize sub-views
     // and model binding
     _configure: function () {
@@ -130,7 +133,7 @@
       this.set(option, model.get(optionMatches[1]), {silent: true});
     },
 
-    // An utility function who render and append a view to the view `el`,
+    // An utility function which render and append a view to the view `el`,
     // or a child element of `el` if $el provided.
     append: function (view, $el) {
       this.views.add(view);
@@ -138,6 +141,30 @@
       $el = _.isString($el) ? this.$el.find($el) : Backbone.$($el);
       $el.append(view.render().el);
       view.delegateEvents();
+      return this;
+    },
+
+
+    // An utility function which assign a view to a child DOM element.
+    assign: function (el, view) {
+      this.views.add(view);
+      view.setElement(this.$(el)).render();
+      return this;
+    },
+
+    // A function to serialized the collection and the model assigned to the view.
+    // Used to render the template.
+    toJSON: function () {
+      return {
+        collection: this.collection ? this.collection.toJSON() : null,
+        model: this.model ? this.model.toJSON() : null
+      };
+    },
+
+    // Override the render function to render using the template if present.
+    render: function () {
+      if (this.template)
+        this.$el.html(this.template(this.toJSON()));
       return this;
     },
 
