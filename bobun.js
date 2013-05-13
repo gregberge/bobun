@@ -15,7 +15,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`
-  Bobun.VERSION = '0.3.5';
+  Bobun.VERSION = '0.3.6';
 
   // Require Underscore, if we're on the server, and it's not already present
   var _ = root._;

@@ -1,7 +1,7 @@
 {
   "name": "bobun",
   "description": "Backbone UI oriented library.",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "keywords": [
     "backbone",
