@@ -280,6 +280,7 @@ describe('Bobun.View', function () {
       bobunView.domEventTriggerProxy(event);
 
       expect(spy.called).to.be.true;
+      expect(spy.calledWith(event, bobunView)).to.be.true;
     });
   });
 });
