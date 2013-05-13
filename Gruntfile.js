@@ -22,12 +22,25 @@ module.exports = function (grunt) {
       all: {
         src: ['test/**/*']
       }
+    },
+
+    uglify: {
+      'default': {
+        options: {
+          sourceMap: 'bobun.min.map',
+          sourceMappingURL: 'bobun.min.map'
+        },
+        files: {
+          'bobun.min.js': 'bobun.js'
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['simplemocha', 'jshint']);
+  grunt.registerTask('default', ['simplemocha', 'jshint', 'uglify']);
   grunt.registerTask('test', ['simplemocha']);
 };
