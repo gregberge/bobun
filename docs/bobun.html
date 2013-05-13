@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>bobun.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>bobun.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="string">'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Establish the root object, <code>window</code> in the browser, or <code>gobal</code> on the server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> root = <span class="keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>The top-level namespace. All public Backbone classes and modules will
+be attached to this. Exported for both the browser and the server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> Bobun;
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> exports !== <span class="string">'undefined'</span>) {
+    Bobun = exports;
+  } <span class="keyword">else</span> {
+    Bobun = root.Bobun = {};
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Current version of the library. Keep in sync with <code>package.json</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Bobun.VERSION = <span class="string">'0.3.6'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Require Underscore, if we&#39;re on the server, and it&#39;s not already present</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> _ = root._;
+  <span class="keyword">if</span> (! _ &amp;&amp; (<span class="keyword">typeof</span> require !== <span class="string">'undefined'</span>)) _ = require(<span class="string">'underscore'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Require Backbone, if we&#39;re on the server, and it&#39;s not already present</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> Backbone = root.Backbone;
+  <span class="keyword">if</span> (! Backbone &amp;&amp; (<span class="keyword">typeof</span> require !== <span class="string">'undefined'</span>)) Backbone = require(<span class="string">'backbone'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Require backbone.babysitter, if we&#39;re on the server, and it&#39;s not already present</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Backbone.ChildViewContainer = root.Backbone ? root.Backbone.ChildViewContainer : <span class="keyword">void</span> <span class="number">0</span>;
+  <span class="keyword">if</span> (! Backbone.ChildViewContainer &amp;&amp; (<span class="keyword">typeof</span> require !== <span class="string">'undefined'</span>))
+    Backbone.ChildViewContainer = require(<span class="string">'backbone.babysitter'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2>Bobun.Binding</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>A module that uses <code>set</code>, <code>get</code>, <code>on</code> methods and <code>change:*</code> events to bind two objects.
+It support one-way and two-way bindings.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Bobun.Binding = <span class="function"><span class="keyword">function</span> <span class="params">(obj)</span> {</span>
+    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Bobun.Binding) <span class="keyword">return</span> obj;
+    <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Bobun.Binding)) <span class="keyword">return</span> <span class="keyword">new</span> Bobun.Binding(obj);
+    <span class="keyword">this</span>._wrapped = obj;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>A method to format attributes to a valid object.</p>
+<p>   {&#39;objAttribute&#39;: &#39;bindedObjAttribute&#39;}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> formatAttributes = <span class="function"><span class="keyword">function</span> <span class="params">(attributes)</span> {</span>
+    attributes = <span class="keyword">typeof</span> attributes === <span class="string">'string'</span> ? [attributes] : attributes;
+    <span class="keyword">return</span> _.isArray(attributes) ? _.object(attributes, attributes) : attributes;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Provide a one-way binding from <code>obj</code> to <code>bindedObj</code> on a single symetric attribute,
+an array of symetric attributes, or an hash of asynmetric attributes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Bobun.Binding.bindTo = <span class="function"><span class="keyword">function</span> <span class="params">(obj, bindedObj, attributes)</span> {</span>
+    <span class="keyword">if</span> (! obj || ! bindedObj || ! attributes) <span class="keyword">return</span> ;
+
+    attributes = formatAttributes(attributes);
+
+    _.each(attributes, <span class="function"><span class="keyword">function</span> <span class="params">(bindKey, key)</span> {</span>
+      obj.on(<span class="string">'change:'</span> + key, <span class="function"><span class="keyword">function</span> <span class="params">(obj, value)</span> {</span>
+        bindedObj.set(bindKey, value);
+      });
+    });
+
+    <span class="keyword">return</span> obj;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Provide a two-way binding from <code>obj</code> to <code>bindedObj</code> on a single symetric attribute,
+an array of symetric attributes, or an hash of asynmetric attributes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Bobun.Binding.bind = <span class="function"><span class="keyword">function</span> <span class="params">(obj, bindedObj, attributes)</span> {</span>
+    attributes = formatAttributes(attributes);
+
+    Bobun.Binding.bindTo(obj, bindedObj, attributes);
+    Bobun.Binding.bindTo(bindedObj, obj, _.invert(attributes));
+
+    <span class="keyword">return</span> obj;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Expose function on the prototype to call the wrapped object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _.each([<span class="string">'bindTo'</span>, <span class="string">'bind'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(method)</span> {</span>
+    Bobun.Binding.prototype[method] = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> Bobun.Binding[method].apply(<span class="keyword">this</span>._wrapped, [<span class="keyword">this</span>._wrapped].concat(_.toArray(arguments)));
+    };
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h2>Bobun.View</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>A module which add an event couch with <code>options</code>, a sub-views support
+and binding functions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Bobun.View = Backbone.View.extend({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>A template assigned to the view</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    template: <span class="literal">null</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Override <code>Backbone.View_configure</code> method, who initialize sub-views
+and model binding</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _configure: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      Backbone.View.prototype._configure.apply(<span class="keyword">this</span>, arguments);
+
+      <span class="keyword">this</span>.views = <span class="keyword">new</span> Backbone.ChildViewContainer(<span class="keyword">this</span>.options.views || []);
+
+      <span class="keyword">this</span>.on(<span class="string">'change:views'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+        <span class="keyword">this</span>.views = <span class="keyword">new</span> Backbone.ChildViewContainer(<span class="keyword">this</span>.options.views || []);
+        <span class="keyword">this</span>.render();
+      });
+
+      _.each(<span class="keyword">this</span>.options, <span class="function"><span class="keyword">function</span> <span class="params">(value, option)</span> {</span>
+        <span class="keyword">this</span>._bindModelOption(option);
+      }, <span class="keyword">this</span>);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>A private function used to bind a model property to an option
+using a syntax <code>model.attribute</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _bindModelOption: <span class="function"><span class="keyword">function</span> <span class="params">(option, model)</span> {</span>
+      <span class="keyword">var</span> optionValue, optionMatches, attributes;
+
+      model = model || <span class="keyword">this</span>.model;
+      optionValue = <span class="keyword">this</span>.options[option];
+
+      <span class="keyword">if</span> (! model || ! option || <span class="keyword">typeof</span> optionValue !== <span class="string">'string'</span>) <span class="keyword">return</span> ;
+
+      optionMatches = optionValue.match(<span class="regexp">/model\.(.*)/</span>);
+
+      <span class="keyword">if</span> (! optionMatches) <span class="keyword">return</span> ;
+
+      attributes = {};
+      attributes[option] = optionMatches[<span class="number">1</span>];
+
+      <span class="keyword">this</span>.bind(model, attributes);
+      <span class="keyword">this</span>.set(option, model.get(optionMatches[<span class="number">1</span>]), {silent: <span class="literal">true</span>});
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>An utility function which render and append a view to the view <code>el</code>,
+or a child element of <code>el</code> if $el provided.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    append: <span class="function"><span class="keyword">function</span> <span class="params">(view, $el)</span> {</span>
+      <span class="keyword">this</span>.views.add(view);
+      $el = $el || <span class="keyword">this</span>.$el;
+      $el = _.isString($el) ? <span class="keyword">this</span>.$el.find($el) : Backbone.$($el);
+      $el.append(view.render().el);
+      view.delegateEvents();
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>An utility function which assign a view to a child DOM element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    assign: <span class="function"><span class="keyword">function</span> <span class="params">(el, view)</span> {</span>
+      <span class="keyword">this</span>.views.add(view);
+      view.setElement(<span class="keyword">this</span>.$(el)).render();
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>A function to serialized the collection and the model assigned to the view.
+Used to render the template.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    toJSON: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> {
+        collection: <span class="keyword">this</span>.collection ? <span class="keyword">this</span>.collection.toJSON() : <span class="literal">null</span>,
+        model: <span class="keyword">this</span>.model ? <span class="keyword">this</span>.model.toJSON() : <span class="literal">null</span>
+      };
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Override the render function to render using the template if present.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    render: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">if</span> (<span class="keyword">this</span>.template)
+        <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.template(<span class="keyword">this</span>.toJSON()));
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>An utility function to proxy a DOM event to a view event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    domEventTriggerProxy: <span class="function"><span class="keyword">function</span> <span class="params">(event)</span> {</span>
+      <span class="keyword">this</span>.trigger(event.type, event, <span class="keyword">this</span>);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Override <code>Backbone.View.remove</code> method to remove sub-views</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    remove: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      Backbone.View.prototype.remove.apply(<span class="keyword">this</span>, arguments);
+      <span class="keyword">return</span> <span class="keyword">this</span>.clearViews();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Clear subviews</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    clearViews: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">this</span>.views.each(_.bind(<span class="function"><span class="keyword">function</span> <span class="params">(view)</span> {</span>
+        <span class="keyword">this</span>.views.remove(view.remove());
+      }, <span class="keyword">this</span>));
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Override <code>Backbone.View.remove</code> method to stop listening the sub-views</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    stopListening: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      Backbone.View.prototype.stopListening.apply(<span class="keyword">this</span>, arguments);
+      <span class="keyword">this</span>.views.invoke(<span class="string">'stopListening'</span>);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Use <code>Backbone.Model</code> method to handle options manipulation</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _.each([<span class="string">'set'</span>, <span class="string">'get'</span>, <span class="string">'_validate'</span>, <span class="string">'previous'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(method)</span> {</span>
+    Bobun.View.prototype[method] = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">var</span> attributes = <span class="keyword">this</span>.attributes, result;
+      <span class="keyword">this</span>.attributes = <span class="keyword">this</span>.options;
+      result = Backbone.Model.prototype[method].apply(<span class="keyword">this</span>, arguments);
+      <span class="keyword">this</span>.attributes = attributes;
+      <span class="keyword">return</span> result;
+    };
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p><code>Bobun.Binding</code> methods that we want to implement on the view</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _.each([<span class="string">'bindTo'</span>, <span class="string">'bind'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(method)</span> {</span>
+    Bobun.View.prototype[method] = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> Bobun.Binding[method].apply(<span class="keyword">this</span>, [<span class="keyword">this</span>].concat(_.toArray(arguments)));
+    };
+  });
+
+}).call(<span class="keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

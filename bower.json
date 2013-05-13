@@ -1,0 +1,10 @@
+{
+  "name": "bobun-website",
+  "description": "Bobun website.",
+  "version": "0.3.6",
+  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "devDependencies": {
+    "bootstrap": "~2.3.1",
+    "bobun": "latest"
+  }
+}

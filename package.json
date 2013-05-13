@@ -1,0 +1,11 @@
+{
+  "name": "bobun-website",
+  "description": "Bobun website.",
+  "version": "0.3.6",
+  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-less": "~0.5.1",
+    "docco": "~0.6.2"
+  }
+}
