@@ -82,7 +82,7 @@ be attached to this. Exported for both the browser and the server.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  Bobun.VERSION = <span class="string">'0.3.6'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  Bobun.VERSION = <span class="string">'0.4.0'</span>;</pre></div></div>
             
         </li>
         
@@ -457,7 +457,7 @@ Used to render the template.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    domEventTriggerProxy: <span class="function"><span class="keyword">function</span> <span class="params">(event)</span> {</span>
-      <span class="keyword">this</span>.trigger(event.type, event, <span class="keyword">this</span>);
+      <span class="keyword">this</span>.trigger(<span class="string">'$'</span> + event.type, event, <span class="keyword">this</span>);
     },</pre></div></div>
             
         </li>
