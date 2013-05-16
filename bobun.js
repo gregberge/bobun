@@ -173,7 +173,7 @@
 
     // An utility function to proxy a DOM event to a view event
     domEventTriggerProxy: function (event) {
-      this.trigger(event.type, event, this);
+      this.trigger('$' + event.type, event, this);
     },
 
     // Override `Backbone.View.remove` method to remove sub-views

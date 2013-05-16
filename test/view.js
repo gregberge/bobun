@@ -276,7 +276,7 @@ describe('Bobun.View', function () {
       var spy = sinon.spy(),
       event = Backbone.$.Event('click');
 
-      bobunView.on('click', spy);
+      bobunView.on('$click', spy);
       bobunView.domEventTriggerProxy(event);
 
       expect(spy.called).to.be.true;
