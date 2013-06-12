@@ -193,7 +193,7 @@
     // Override `Backbone.View.remove` method to stop listening the sub-views
     stopListening: function () {
       Backbone.View.prototype.stopListening.apply(this, arguments);
-      this.views.invoke('stopListening');
+      this.views.invoke.apply(this.views, ['stopListening'].concat(_.toArray(arguments)));
     }
   });
 
