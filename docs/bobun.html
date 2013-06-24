@@ -513,7 +513,7 @@ Used to render the template.</p>
             
             <div class="content"><div class='highlight'><pre>    stopListening: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
       Backbone.View.prototype.stopListening.apply(<span class="keyword">this</span>, arguments);
-      <span class="keyword">this</span>.views.invoke(<span class="string">'stopListening'</span>);
+      <span class="keyword">this</span>.views.invoke.apply(<span class="keyword">this</span>.views, [<span class="string">'stopListening'</span>].concat(_.toArray(arguments)));
     }
   });</pre></div></div>
             

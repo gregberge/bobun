@@ -1,18 +1,12 @@
-module.exports = function (grunt) {
-  'use strict';
+'use strict';
 
-  var docco = require('docco');
+var docco = require('docco'),
+    fs = require('fs');
+
+module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
-    less: {
-      'default': {
-        files: {
-          'dist/main.css': 'less/main.less'
-        }
-      }
-    },
 
     docco: {
       src: ['components/bobun/bobun.js']
@@ -26,6 +20,16 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('default', ['less', 'docco']);
+  grunt.registerTask('default', ['build-index', 'docco']);
+  grunt.registerTask('build-index', 'Build index.', function () {
+    var done = this.async();
+
+    var bobunBower = require('./components/bobun/bower.json');
+
+    fs.writeFile('index.html', grunt.template.process(fs.readFileSync('index-template.html', {encoding: 'utf-8'}), {data: bobunBower}), function (err) {
+      done(! err);
+    });
+  });
 };
