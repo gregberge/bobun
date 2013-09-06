@@ -111,7 +111,7 @@ Provides a two-way binding.
 ```javascript
 // simple
 Bobun.Binding.bind(modelA, modelB, 'symetricAttribute');
-Bobun.Binding.bind(modelA, modelB, ['fistSymetricAttribute', 'secondSymetricAttribute']);
+Bobun.Binding.bind(modelA, modelB, ['firstSymetricAttribute', 'secondSymetricAttribute']);
 Bobun.Binding.bind(modelA, modelB, {'modelAAttribute': 'modelBAttribute'});
 
 // wrapped
@@ -126,7 +126,7 @@ Provides a one-way binding.
 ```javascript
 // simple
 Bobun.Binding.bindTo(modelA, modelB, 'symetricAttribute');
-Bobun.Binding.bindTo(modelA, modelB, ['fistSymetricAttribute', 'secondSymetricAttribute']);
+Bobun.Binding.bindTo(modelA, modelB, ['firstSymetricAttribute', 'secondSymetricAttribute']);
 Bobun.Binding.bindTo(modelA, modelB, {'modelAAttribute': 'modelBAttribute'});
 
 // wrapped
