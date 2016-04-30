@@ -1,5 +1,7 @@
 # Bobun [![Build Status](https://travis-ci.org/neoziro/bobun.png?branch=master)](https://travis-ci.org/neoziro/bobun)
 
+# This plugin is no longer actively maintained, you can still use it but issues will not be resolved. If you want the npm name, you can contact me by email.
+
 Bobun is a UI oriented Backbone library. It supports one-way and two-way bindings and sub-views.
 
 ## Installing
